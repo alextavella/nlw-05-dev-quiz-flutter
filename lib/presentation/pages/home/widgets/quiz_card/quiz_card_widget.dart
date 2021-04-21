@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:devquiz/core/core.dart';
+import 'package:devquiz/presentation/shared/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class QuizCardWidget extends StatelessWidget {
   @override
@@ -20,14 +20,7 @@ class QuizCardWidget extends StatelessWidget {
         Row(
           children: [
             Expanded(flex: 1, child: Text("3/10", style: AppTextStyles.body11)),
-            Expanded(
-              flex: 4,
-              child: LinearProgressIndicator(
-                  value: 0.3,
-                  backgroundColor: AppColors.chartSecondary,
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(AppColors.chartPrimary)),
-            )
+            Expanded(flex: 4, child: ProgressIndicatorWidget(value: 0.3))
           ],
         )
       ]),
