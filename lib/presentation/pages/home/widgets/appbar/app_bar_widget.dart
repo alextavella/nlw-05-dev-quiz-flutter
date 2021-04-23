@@ -1,10 +1,13 @@
 import 'package:devquiz/core/app_gradients.dart';
 import 'package:devquiz/core/app_text_styles.dart';
+import 'package:devquiz/data/models/models.dart';
 import 'package:devquiz/presentation/pages/home/widgets/score_card/score_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends PreferredSize {
-  AppBarWidget()
+  final UserModel user;
+
+  AppBarWidget({required this.user})
       : super(
           preferredSize: Size.fromHeight(250),
           child: Container(
@@ -13,7 +16,7 @@ class AppBarWidget extends PreferredSize {
                 children: [
                   Container(
                     width: double.maxFinite,
-                    height: 161,
+                    height: 150,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(gradient: AppGradients.linear),
                     child: Row(
@@ -24,7 +27,7 @@ class AppBarWidget extends PreferredSize {
                             style: AppTextStyles.title,
                             children: [
                               TextSpan(
-                                  text: "Alex Tavella",
+                                  text: user.name,
                                   style: AppTextStyles.titleBold)
                             ])),
                         Container(
@@ -32,8 +35,7 @@ class AppBarWidget extends PreferredSize {
                           height: 58,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://avatars.githubusercontent.com/u/3128408?s=400&u=ca5efe074f71f07d0d08f668f66589610b8df018&v=4")),
+                                image: NetworkImage(user.photoUrl)),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         )

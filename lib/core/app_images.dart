@@ -8,3 +8,7 @@ class AppImages {
   static String get trophy => "assets/images/trophy.png";
   static String get logo => "assets/images/logo.png";
 }
+
+extension AppImagesExt on String {
+  String get toImage => "assets/images/$this.png";
+}

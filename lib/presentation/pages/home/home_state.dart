@@ -1,0 +1,1 @@
+enum HomeState { IDLE, LOADING, SUCCESS, ERROR }
