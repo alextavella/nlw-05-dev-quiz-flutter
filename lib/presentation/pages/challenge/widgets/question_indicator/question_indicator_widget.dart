@@ -9,11 +9,30 @@ class QuestionIndicatorWidget extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Questão 04", style: AppTextStyles.body),
-            Text("de 10", style: AppTextStyles.body),
-          ]),
-          SizedBox(height: 16),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Questão 04", style: AppTextStyles.body),
+                      Text("de 10", style: AppTextStyles.body),
+                    ]),
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.close,
+                  size: 20,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
           ProgressIndicatorWidget(value: 0.4)
         ],
       ),

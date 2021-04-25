@@ -1,5 +1,5 @@
 import 'package:devquiz/core/core.dart';
-import 'package:devquiz/data/models/quiz_model.dart';
+import 'package:devquiz/presentation/pages/challenge/challenge_page.dart';
 import 'package:devquiz/presentation/pages/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -41,8 +41,19 @@ class _HomePageState extends State<HomePage> {
       ));
     }
 
-    final quizCardWidgets =
-        controller.quizzes!.map((quiz) => QuizCardWidget(quiz: quiz)).toList();
+    final quizCardWidgets = controller.quizzes!
+        .map((quiz) => QuizCardWidget(
+              quiz: quiz,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChallengePage(
+                              questions: quiz.questions,
+                            )));
+              },
+            ))
+        .toList();
 
     return Scaffold(
         appBar: AppBarWidget(
