@@ -5,24 +5,33 @@ import 'package:google_fonts/google_fonts.dart';
 class ButtonWidget extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
+  final bool disabled;
 
   final Color bgColor;
   final Color borderColor;
   final Color textColor;
 
-  ButtonWidget(
-      {required this.label,
-      required this.bgColor,
-      required this.borderColor,
-      required this.textColor,
-      required this.onTap});
+  Color get _bgColor => this.disabled ? AppColors.white : this.bgColor;
+  Color get _borderColor => this.disabled ? AppColors.white : this.borderColor;
+  Color get _textColor => this.disabled ? AppColors.lightGrey : this.textColor;
 
-  ButtonWidget.normal({required this.label, required this.onTap})
+  ButtonWidget({
+    required this.label,
+    required this.bgColor,
+    required this.borderColor,
+    required this.textColor,
+    required this.onTap,
+    this.disabled = false,
+  });
+
+  ButtonWidget.normal(
+      {required this.label, required this.onTap, this.disabled = false})
       : this.bgColor = AppColors.white,
         this.borderColor = AppColors.lightGrey,
         this.textColor = AppColors.lightGrey;
 
-  ButtonWidget.primary({required this.label, required this.onTap})
+  ButtonWidget.primary(
+      {required this.label, required this.onTap, this.disabled = false})
       : this.bgColor = AppColors.darkGreen,
         this.borderColor = AppColors.darkGreen,
         this.textColor = AppColors.white;
@@ -33,13 +42,14 @@ class ButtonWidget extends StatelessWidget {
       height: 48,
       child: TextButton(
         style: TextButton.styleFrom(
-          primary: this.textColor,
-          onSurface: this.textColor,
-          backgroundColor: this.bgColor,
-          side: BorderSide(color: this.borderColor),
+          primary: this._textColor,
+          onSurface: this._textColor,
+          backgroundColor: this._bgColor,
+          side: BorderSide(color: this._borderColor),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
+          enableFeedback: !this.disabled,
         ),
         // style: ButtonStyle(
         //   backgroundColor: MaterialStateProperty.all(this.bgColor),
@@ -48,13 +58,11 @@ class ButtonWidget extends StatelessWidget {
         //   )),
         //   side: MaterialStateProperty.all(BorderSide(color: this.borderColor)),
         // ),
-        onPressed: () {
-          this.onTap();
-        },
+        onPressed: this.disabled ? null : this.onTap,
         child: Text(
           this.label,
           style: GoogleFonts.notoSans(
-            color: this.textColor,
+            color: this._textColor,
             fontWeight: FontWeight.w600,
             fontSize: 15,
           ),
