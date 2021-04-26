@@ -19,6 +19,10 @@ class _ChallengePageState extends State<ChallengePage> {
 
   @override
   void initState() {
+    // this.controller.pageSizeNotifier.addListener(() {
+    //   this.setState(() {});
+    // });
+
     this.pageController.addListener(() {
       this.controller.currentPage = pageController.page!.toInt() + 1;
     });
@@ -39,16 +43,18 @@ class _ChallengePageState extends State<ChallengePage> {
           question: question,
         ));
 
+    this.controller.pageSize = widget.questions.length;
+
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
           child: SafeArea(
             top: true,
             child: ValueListenableBuilder(
-              valueListenable: controller.currentPageNotifier,
+              valueListenable: this.controller.currentPageNotifier,
               builder: (context, value, _) => QuestionIndicatorWidget(
-                currentPage: controller.currentPage,
-                pageSize: widget.questions.length,
+                currentPage: this.controller.currentPage,
+                pageSize: this.controller.pageSize,
               ),
             ),
           )),
@@ -66,18 +72,18 @@ class _ChallengePageState extends State<ChallengePage> {
             children: [
               Expanded(
                 child: ButtonWidget.normal(
-                    label: "Pular",
-                    onTap: () {
-                      this.pageController.nextPage(
-                          duration: Duration(milliseconds: 100),
-                          curve: Curves.linear);
-                    }),
+                  label: "Pular",
+                  onTap: this.nextPage,
+                ),
               ),
               SizedBox(
                 width: 7,
               ),
               Expanded(
-                child: ButtonWidget.primary(label: "Confirmar", onTap: () {}),
+                child: ButtonWidget.primary(
+                  label: "Confirmar",
+                  onTap: () {},
+                ),
               )
             ],
           ),

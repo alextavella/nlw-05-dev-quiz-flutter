@@ -5,11 +5,18 @@ import 'package:flutter/material.dart';
 class AnswerWidget extends StatelessWidget {
   final AnswerModel answer;
   final bool isSelected;
+  final bool disabled;
+  final VoidCallback onTap;
 
   String get title => this.answer.title;
   bool get isRight => this.answer.isRight;
 
-  const AnswerWidget({required this.answer, this.isSelected = false});
+  const AnswerWidget({
+    required this.answer,
+    required this.onTap,
+    this.disabled = false,
+    this.isSelected = false,
+  });
 
   Color get _selectedColorRight =>
       this.isRight ? AppColors.darkGreen : AppColors.darkRed;
@@ -32,47 +39,54 @@ class AnswerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Container(
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: this.isSelected
-                  ? this._selectedCardColorRight
-                  : AppColors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.fromBorderSide(BorderSide(
+      child: IgnorePointer(
+        // ignoring: disabled,
+        ignoring: false,
+        child: GestureDetector(
+          onTap: this.onTap,
+          child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
                   color: this.isSelected
-                      ? this._selectedBorderCardColorRight
-                      : AppColors.border))),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                  child: Text(this.title,
-                      style: this.isSelected
-                          ? this._selectedTextStyleRight
-                          : AppTextStyles.body)),
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                    color: this.isSelected
-                        ? this._selectedColorRight
-                        : AppColors.white,
-                    borderRadius: BorderRadius.circular(500),
-                    border: Border.fromBorderSide(BorderSide(
+                      ? this._selectedCardColorRight
+                      : AppColors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.fromBorderSide(BorderSide(
+                      color: this.isSelected
+                          ? this._selectedBorderCardColorRight
+                          : AppColors.border))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                      child: Text(this.title,
+                          style: this.isSelected
+                              ? this._selectedTextStyleRight
+                              : AppTextStyles.body)),
+                  Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
                         color: this.isSelected
-                            ? this._selectedBorderColorRight
-                            : AppColors.border))),
-                child: this.isSelected
-                    ? (Icon(
-                        this._selectedIconRight,
-                        size: 16,
-                        color: Colors.white,
-                      ))
-                    : null,
-              )
-            ],
-          )),
+                            ? this._selectedColorRight
+                            : AppColors.white,
+                        borderRadius: BorderRadius.circular(500),
+                        border: Border.fromBorderSide(BorderSide(
+                            color: this.isSelected
+                                ? this._selectedBorderColorRight
+                                : AppColors.border))),
+                    child: this.isSelected
+                        ? (Icon(
+                            this._selectedIconRight,
+                            size: 16,
+                            color: Colors.white,
+                          ))
+                        : null,
+                  )
+                ],
+              )),
+        ),
+      ),
     );
   }
 }
