@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 
 class AnswerWidget extends StatelessWidget {
   final AnswerModel answer;
+  final VoidCallback onTap;
   final bool isSelected;
   final bool disabled;
-  final VoidCallback onTap;
 
   String get title => this.answer.title;
   bool get isRight => this.answer.isRight;
+  bool get isResponded => this.disabled && this.isSelected;
 
   const AnswerWidget({
     required this.answer,
     required this.onTap,
-    this.disabled = false,
     this.isSelected = false,
+    this.disabled = false,
   });
 
   Color get _selectedColorRight =>
@@ -33,53 +34,61 @@ class AnswerWidget extends StatelessWidget {
   TextStyle get _selectedTextStyleRight =>
       this.isRight ? AppTextStyles.bodyDarkGreen : AppTextStyles.bodyDarkRed;
 
-  IconData get _selectedIconRight => this.isRight ? Icons.check : Icons.close;
+  IconData get _selectedIconRight {
+    if (!this.isResponded) return Icons.circle_rounded;
+    return this.isRight ? Icons.check : Icons.close;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: IgnorePointer(
-        // ignoring: disabled,
-        ignoring: false,
+        ignoring: disabled,
         child: GestureDetector(
           onTap: this.onTap,
           child: Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  color: this.isSelected
-                      ? this._selectedCardColorRight
-                      : AppColors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.fromBorderSide(BorderSide(
-                      color: this.isSelected
-                          ? this._selectedBorderCardColorRight
-                          : AppColors.border))),
+                color: this.isResponded
+                    ? this._selectedCardColorRight
+                    : AppColors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.fromBorderSide(
+                  BorderSide(
+                    color: this.isResponded
+                        ? this._selectedBorderCardColorRight
+                        : AppColors.border,
+                  ),
+                ),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                       child: Text(this.title,
-                          style: this.isSelected
+                          style: this.isResponded
                               ? this._selectedTextStyleRight
                               : AppTextStyles.body)),
                   Container(
                     width: 24,
                     height: 24,
                     decoration: BoxDecoration(
-                        color: this.isSelected
+                        color: this.isResponded
                             ? this._selectedColorRight
                             : AppColors.white,
                         borderRadius: BorderRadius.circular(500),
                         border: Border.fromBorderSide(BorderSide(
-                            color: this.isSelected
+                            color: this.isResponded
                                 ? this._selectedBorderColorRight
                                 : AppColors.border))),
                     child: this.isSelected
                         ? (Icon(
                             this._selectedIconRight,
                             size: 16,
-                            color: Colors.white,
+                            color: this.isResponded
+                                ? AppColors.white
+                                : AppColors.grey,
                           ))
                         : null,
                   )

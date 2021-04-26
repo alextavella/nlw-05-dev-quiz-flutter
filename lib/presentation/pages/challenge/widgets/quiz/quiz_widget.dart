@@ -2,36 +2,49 @@ import 'package:devquiz/core/core.dart';
 import 'package:devquiz/data/models/models.dart';
 import 'package:flutter/material.dart';
 
+import './quiz_controller.dart';
 import '../answer/answer_widget.dart';
 
 class QuizWidget extends StatefulWidget {
   final String title;
   final QuestionModel question;
+  final bool disabled;
 
-  const QuizWidget({Key? key, required this.title, required this.question})
-      : super(key: key);
+  const QuizWidget({
+    Key? key,
+    required this.title,
+    required this.question,
+    this.disabled = false,
+  }) : super(key: key);
 
   @override
   _QuizWidgetState createState() => _QuizWidgetState();
 }
 
 class _QuizWidgetState extends State<QuizWidget> {
-  int? selectedIndex;
+  final quizController = QuizController();
 
   AnswerModel getAnswer(int index) => widget.question.answers[index];
 
   AnswerWidget renderAnswer(int index) {
-    final answer = this.getAnswer(index);
-
     return AnswerWidget(
-      answer: answer,
-      isSelected: index == this.selectedIndex,
-      disabled: selectedIndex != null,
+      answer: this.getAnswer(index),
+      isSelected: index == this.quizController.selectedIndex,
+      disabled: widget.disabled,
       onTap: () {
-        selectedIndex = index;
+        this.quizController.selectedIndex = index;
         setState(() {});
       },
     );
+  }
+
+  @override
+  void initState() {
+    this.quizController.selectedIndexNotifier.addListener(() {
+      setState(() {});
+    });
+
+    super.initState();
   }
 
   @override

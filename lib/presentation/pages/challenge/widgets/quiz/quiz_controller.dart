@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+
 class QuizController {
-  int selectedIndex = 0;
+  final selectedIndexNotifier = ValueNotifier<int?>(null);
+
+  int? get selectedIndex => selectedIndexNotifier.value;
+  set selectedIndex(int? value) => selectedIndexNotifier.value = value;
 }

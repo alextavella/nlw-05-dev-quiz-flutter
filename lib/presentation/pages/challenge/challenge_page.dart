@@ -19,12 +19,16 @@ class _ChallengePageState extends State<ChallengePage> {
 
   @override
   void initState() {
-    // this.controller.pageSizeNotifier.addListener(() {
-    //   this.setState(() {});
-    // });
+    this.controller.pageSizeNotifier.addListener(() {
+      this.setState(() {});
+    });
+    this.controller.respondedNotifier.addListener(() {
+      this.setState(() {});
+    });
 
     this.pageController.addListener(() {
       this.controller.currentPage = pageController.page!.toInt() + 1;
+      this.controller.responded = false;
     });
 
     super.initState();
@@ -36,14 +40,21 @@ class _ChallengePageState extends State<ChallengePage> {
         .nextPage(duration: Duration(milliseconds: 100), curve: Curves.linear);
   }
 
+  void respond() {
+    this.controller.responded = true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final quizWidgets = widget.questions.map((question) => QuizWidget(
-          title: question.title,
-          question: question,
-        ));
-
     this.controller.pageSize = widget.questions.length;
+
+    final quizWidgets = widget.questions.map(
+      (question) => QuizWidget(
+        title: question.title,
+        question: question,
+        disabled: this.controller.responded,
+      ),
+    );
 
     return Scaffold(
       appBar: PreferredSize(
@@ -82,7 +93,7 @@ class _ChallengePageState extends State<ChallengePage> {
               Expanded(
                 child: ButtonWidget.primary(
                   label: "Confirmar",
-                  onTap: () {},
+                  onTap: this.respond,
                 ),
               )
             ],
