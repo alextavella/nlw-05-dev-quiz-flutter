@@ -24,7 +24,7 @@
         ]
       },
       {
-        "title": "Está curtindo o Flutter 2?",
+        "title": "Está curtindo o Flutter?",
         "answers": [{ "title": "Sim", "isRight": true }, { "title": "Não" }]
       }
     ]
