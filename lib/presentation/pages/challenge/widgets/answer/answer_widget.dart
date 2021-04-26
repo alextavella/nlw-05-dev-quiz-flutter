@@ -1,17 +1,15 @@
 import 'package:devquiz/core/core.dart';
+import 'package:devquiz/data/models/answer_model.dart';
 import 'package:flutter/material.dart';
 
 class AnswerWidget extends StatelessWidget {
-  final String title;
-  final bool isRight;
+  final AnswerModel answer;
   final bool isSelected;
 
-  const AnswerWidget(
-      {Key? key,
-      required this.title,
-      this.isRight = false,
-      this.isSelected = false})
-      : super(key: key);
+  String get title => this.answer.title;
+  bool get isRight => this.answer.isRight;
+
+  const AnswerWidget({required this.answer, this.isSelected = false});
 
   Color get _selectedColorRight =>
       this.isRight ? AppColors.darkGreen : AppColors.darkRed;

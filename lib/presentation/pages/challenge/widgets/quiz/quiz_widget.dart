@@ -1,9 +1,10 @@
 import 'package:devquiz/core/core.dart';
 import 'package:devquiz/data/models/models.dart';
-import 'package:devquiz/presentation/pages/challenge/widgets/answer/answer_widget.dart';
 import 'package:flutter/material.dart';
 
-class QuizWidget extends StatelessWidget {
+import '../answer/answer_widget.dart';
+
+class QuizWidget extends StatefulWidget {
   final String title;
   final QuestionModel question;
 
@@ -11,10 +12,25 @@ class QuizWidget extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final answerWidgets = question.answers.map(
-        (answer) => AnswerWidget(title: answer.title, isRight: answer.isRight));
+  _QuizWidgetState createState() => _QuizWidgetState();
+}
 
+class _QuizWidgetState extends State<QuizWidget> {
+  int? selectedIndex;
+
+  AnswerModel getAnswer(int index) => widget.question.answers[index];
+
+  AnswerWidget renderAnswer(int index) {
+    final answer = this.getAnswer(index);
+
+    return AnswerWidget(
+      answer: answer,
+      isSelected: index == this.selectedIndex,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -22,26 +38,14 @@ class QuizWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              this.title,
+              this.widget.title,
               style: AppTextStyles.heading,
             ),
             SizedBox(
               height: 24,
             ),
-            ...answerWidgets,
-            // AnswerWidget(
-            //     title:
-            //         "Possibilita a criação de aplicativos compilados nativamente."),
-            // AnswerWidget(
-            //     isSelected: true,
-            //     isRight: true,
-            //     title:
-            //         "Possibilita a criação de aplicativos compilados nativamente."),
-            // AnswerWidget(
-            //     isSelected: true,
-            //     isRight: false,
-            //     title:
-            //         "Possibilita a criação de aplicativos compilados nativamente.")
+            for (var i = 0; i < widget.question.answers.length; i++)
+              this.renderAnswer(i),
           ],
         ));
   }
