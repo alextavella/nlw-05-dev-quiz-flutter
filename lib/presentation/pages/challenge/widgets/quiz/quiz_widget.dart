@@ -9,11 +9,18 @@ class QuizWidget extends StatefulWidget {
   final String title;
   final QuestionModel question;
   final bool disabled;
+  final Function onSelect;
+
+  AnswerModel selected(int index) => this.question.answers[index];
+
+  AnswerModel get correct =>
+      this.question.answers.firstWhere((a) => a.isRight == true);
 
   const QuizWidget({
     Key? key,
     required this.title,
     required this.question,
+    required this.onSelect,
     this.disabled = false,
   }) : super(key: key);
 
@@ -33,6 +40,7 @@ class _QuizWidgetState extends State<QuizWidget> {
       disabled: widget.disabled,
       onTap: () {
         this.quizController.selectedIndex = index;
+        widget.onSelect(widget.selected(index), widget.correct);
         setState(() {});
       },
     );

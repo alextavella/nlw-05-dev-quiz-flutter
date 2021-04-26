@@ -46,11 +46,11 @@ class _HomePageState extends State<HomePage> {
               quiz: quiz,
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChallengePage(
-                              questions: quiz.questions,
-                            )));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ChallengePage(questions: quiz.questions)),
+                );
               },
             ))
         .toList();

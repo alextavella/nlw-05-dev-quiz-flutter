@@ -42,15 +42,15 @@ class ButtonWidget extends StatelessWidget {
       height: 48,
       child: TextButton(
         style: TextButton.styleFrom(
-          primary: this._textColor,
-          onSurface: this._textColor,
-          backgroundColor: this._bgColor,
-          side: BorderSide(color: this._borderColor),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          enableFeedback: !this.disabled,
-        ),
+            primary: this._textColor,
+            onSurface: this._textColor,
+            backgroundColor: this._bgColor,
+            side: BorderSide(color: this._borderColor),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            enableFeedback: !this.disabled,
+            padding: EdgeInsets.symmetric(horizontal: 20)),
         // style: ButtonStyle(
         //   backgroundColor: MaterialStateProperty.all(this.bgColor),
         //   shape: MaterialStateProperty.all(RoundedRectangleBorder(

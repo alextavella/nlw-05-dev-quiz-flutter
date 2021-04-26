@@ -58,7 +58,9 @@ class AnswerWidget extends StatelessWidget {
                   BorderSide(
                     color: this.isResponded
                         ? this._selectedBorderCardColorRight
-                        : AppColors.border,
+                        : this.isSelected
+                            ? AppColors.grey
+                            : AppColors.border,
                   ),
                 ),
               ),
