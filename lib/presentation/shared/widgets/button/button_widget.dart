@@ -48,7 +48,9 @@ class ButtonWidget extends StatelessWidget {
         //   )),
         //   side: MaterialStateProperty.all(BorderSide(color: this.borderColor)),
         // ),
-        onPressed: () {},
+        onPressed: () {
+          this.onTap();
+        },
         child: Text(
           this.label,
           style: GoogleFonts.notoSans(
