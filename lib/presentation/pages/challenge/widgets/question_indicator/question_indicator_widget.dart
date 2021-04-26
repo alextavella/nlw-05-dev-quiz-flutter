@@ -3,6 +3,11 @@ import 'package:devquiz/presentation/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class QuestionIndicatorWidget extends StatelessWidget {
+  final int currentPage;
+  final int pageSize;
+
+  QuestionIndicatorWidget({required this.currentPage, required this.pageSize});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,8 +22,9 @@ class QuestionIndicatorWidget extends StatelessWidget {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Questão 04", style: AppTextStyles.body),
-                      Text("de 10", style: AppTextStyles.body),
+                      Text("Questão ${this.currentPage}",
+                          style: AppTextStyles.body),
+                      Text("de ${this.pageSize}", style: AppTextStyles.body),
                     ]),
               ),
               IconButton(
@@ -33,7 +39,7 @@ class QuestionIndicatorWidget extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8),
-          ProgressIndicatorWidget(value: 0.4)
+          ProgressIndicatorWidget(value: this.currentPage / this.pageSize)
         ],
       ),
     );

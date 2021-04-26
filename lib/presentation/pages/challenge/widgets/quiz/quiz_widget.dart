@@ -12,8 +12,8 @@ class QuizWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final answerWidgets = question.answers
-        .map((e) => AnswerWidget(title: e.title, isRight: e.isRight));
+    final answerWidgets = question.answers.map(
+        (answer) => AnswerWidget(title: answer.title, isRight: answer.isRight));
 
     return Container(
         padding: EdgeInsets.all(20),
